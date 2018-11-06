@@ -33,24 +33,6 @@
 				zoom: 7
 			});
 
-			var MyCustomControl = L.Control.extend({
-			    options: {
-			        // Default control position
-			        position: 'bottomleft'
-			    },
-			    onAdd: function (map) {
-			        // Create a container with classname and return it
-			        return L.DomUtil.create('div', 'my-custom-control');
-			    },
-			    setContent: function (content) {
-			        // Set the innerHTML of the container
-			        this.getContainer().innerHTML = content;
-			    }
-			});
-
-// Assign to a variable so you can use it later and add it to your map
-var myCustomControl =  new MyCustomControl().addTo(map);
-			
 			//add the basemap to the map
 			map.addLayer(OpenStreetMap_BlackAndWhite);
 
