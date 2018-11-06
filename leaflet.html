@@ -39,7 +39,7 @@
 
 			//add a local geojson file
 			//Thanks to https://www.igismap.com/add-load-geojson-file-point-polyline-polygon-map-leaflet-js/ for the tutorial
-			$.getJSON("statesoutline.json",function(data){
+			$.getJSON("./statesoutline.json",function(data){
 			// add GeoJSON layer to the map once the file is loaded
 			var datalayer = L.geoJson(data ,{
 				onEachFeature: function(feature, featureLayer) {
@@ -49,7 +49,7 @@
 			map.fitBounds(datalayer.getBounds());
 			});
 
-			$.getJSON("cafocounties.geojson",function(data){
+			$.getJSON("./cafocounties.geojson",function(data){
 			// add GeoJSON layer to the map once the file is loaded
 			var datalayer = L.geoJson(data ,{
 				onEachFeature: function(feature, featureLayer) {
