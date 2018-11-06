@@ -1,64 +1,82 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Leaflet Map</title>
-		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
-		integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-		crossorigin=""/>
+	<head>
+		<!-- the leaflet CSS and JS library-->
+		 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+		   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+		   crossorigin=""/>
 		 <!-- Make sure you put this AFTER Leaflet's CSS -->
-		<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
-		 integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
-		crossorigin=""></script>
-
-		 <script src="./countries_1.geojson"></script>
-
-		   <style type="text/css">
+		 <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+		   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+		   crossorigin=""></script>
+		 <!-- Add JQuery to get local GeoJson file -->
+		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<!-- A sytle for the map element -->
+		<style>
 			#map {height: 100vh; background-color: grey;}
 		</style>
+	</head>
 
-</head>
 <body>
 
 	<div id="map"></div>
 
 		<script>
-			var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			maxZoom: 19,
-			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+				maxZoom: 18,
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 			});
 
 			//make a map
 			var map = new L.Map("map", {
-				center: new L.LatLng(0, 0),
-				zoom: 2.5
+				center: new L.LatLng(38.7, -75.4),
+				zoom: 7
 			});
 
-			var marker = L.marker([35.6895, 139.6917]).addTo(map); // Tokyo, Japan
-			var marker = L.marker([-6.175110, 106.865036]).addTo(map); // Jakarta, Indonesia
-			var marker = L.marker([14.599512, 120.984222]).addTo(map); // Seoul, Korea
-			var marker = L.marker([37.566536, 126.977966]).addTo(map); // Shanhai, China
-			var marker = L.marker([31.230391, 121.473701]).addTo(map); // Mumbai, India
-			var marker = L.marker([19.075983, 72.877655]).addTo(map); // Manila, Phillipines
-			var marker = L.marker([40.712776, -74.005974]).addTo(map); // New York City, USA
-			var marker = L.marker([39.04202, 116.407394]).addTo(map); //Beijing, China
-			var marker = L.marker([19.432608, -99.133209]).addTo(map); // Mexico City, Mexico
-			var marker = L.marker([28.704060, 77.102493]).addTo(map); // Dehli, India
-			//add the basemap to the map
-			map.addLayer(OpenStreetMap_Mapnik);
+			var MyCustomControl = L.Control.extend({
+			    options: {
+			        // Default control position
+			        position: 'bottomleft'
+			    },
+			    onAdd: function (map) {
+			        // Create a container with classname and return it
+			        return L.DomUtil.create('div', 'my-custom-control');
+			    },
+			    setContent: function (content) {
+			        // Set the innerHTML of the container
+			        this.getContainer().innerHTML = content;
+			    }
+			});
 
-						// add GeoJson from Local File
-			$.getJSON("./countries_1.geojson",function(data){
+// Assign to a variable so you can use it later and add it to your map
+var myCustomControl =  new MyCustomControl().addTo(map);
+			
+			//add the basemap to the map
+			map.addLayer(OpenStreetMap_BlackAndWhite);
+
+
+			//add a local geojson file
+			//Thanks to https://www.igismap.com/add-load-geojson-file-point-polyline-polygon-map-leaflet-js/ for the tutorial
+			$.getJSON("statesoutline.json",function(data){
 			// add GeoJSON layer to the map once the file is loaded
 			var datalayer = L.geoJson(data ,{
 				onEachFeature: function(feature, featureLayer) {
-					featureLayer.bindPopup(feature.properties.NAME);
+					featureLayer.bindPopup(feature.properties.NAME_1);
 				}
 			}).addTo(map);
 			map.fitBounds(datalayer.getBounds());
 			});
 
-			L.geoJson(countries_1.geojson).addTo(map);
+			$.getJSON("cafocounties.geojson",function(data){
+			// add GeoJSON layer to the map once the file is loaded
+			var datalayer = L.geoJson(data ,{
+				onEachFeature: function(feature, featureLayer) {
+					featureLayer.bindPopup(feature.properties.NAME_1);
+				}
+			}).addTo(map);
+			map.fitBounds(datalayer.getBounds());
+			});
+
 
 	</script>		
 </body>
