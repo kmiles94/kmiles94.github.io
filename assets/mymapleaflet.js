@@ -3,9 +3,9 @@
 var myData;
 var map = L.map('map').setView([37.560806, -100.763308], 4.25);
 
-var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+var OpenStreetMap_BlackAndWhite = L.tileLayer('https://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
     maxZoom: 18,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 });
 
 //add the basemap to the map
@@ -35,7 +35,7 @@ function style(feature) {
     };
 }
 
-//interaction handlers (credit: http://leafletjs.com/examples/choropleth/)
+//interaction handlers (credit: https://leafletjs.com/examples/choropleth/)
 
 // control that shows state info on hover
 var info = L.control();
@@ -117,7 +117,7 @@ legend.onAdd = function (map) {
 legend.addTo(map);
 
 //Reset extent button
-// Thanks to http://www.coffeegnome.net/control-button-leaflet/
+// Thanks to https://www.coffeegnome.net/control-button-leaflet/
 //reset the extent on a click
 resetExtent = function () {
     map.setView([37.560806, -100.763308], 4.25);
