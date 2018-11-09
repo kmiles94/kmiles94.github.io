@@ -3,13 +3,13 @@
 var myData;
 var map = L.map('map').setView([37.560806, -100.763308], 4.25);
 
-var Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-	maxZoom: 16
+var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+	maxZoom: 18,
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 });
 
 //add the basemap to the map
-            map.addLayer(Esri_WorldGrayCanvas);
+            map.addLayer(OpenStreetMap_BlackAndWhite);
 
 //Get fill colours. Returns a fill colour based on what the value of the param is
 function getColor(d) {
