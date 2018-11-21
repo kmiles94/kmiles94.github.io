@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+<html>
+
+	<body class="no-sidebar is-preload">
+		<div id="page-wrapper">
+      <div class="content">
+				<section>
+          <head>
+		        <title>Live Maps</title>
+          		<meta charset="utf-8" />
+          		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+          		<link rel="stylesheet" href="assets/css/main.css"/>
+          		<noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript>
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+       integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+       crossorigin=""/>
+     <!-- Make sure you put this AFTER Leaflet's CSS -->
+     <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+       integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+       crossorigin=""></script>
+											
+	<!-- the Omnivore plugin to convert KML to GeoJSON -->
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>										
+  
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet' />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+
+  <style>
+
+     hr {
+        border: 0;
+        border-top: solid 1px #ddd;
+      } 
+
+     a {
+        text-decoration: none;
+        color: #ffffff;
+      } 
+
+    a:hover {
+        color: #F5BB00;
+      }
+
+       
+  </style>
+
+<body>
+   <h2 style="font-family: sans-serif; color: #FFF; font-size: 45px; background-color: #252523; padding: 30px; margin: 0; font-weight: normal; overflow: hidden;"><center><a href="https://kmiles94.github.io/index.html">LIVE MAPS</center></h2></a>
+   <hr>
+  
+<div>
+  <style>
+    #newmap {
+      width: 100%;
+      height: 800px;
+      background-color: grey;
+    }
+</style>
+</head>
+<body>
+
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css' type='text/css' />
+
+
+        
+              <h3 style="padding-left: 2%; color: #252523; background-color: #FFFFFF; margin: 0;"><center>
+                <img src="https://www.mapbox.com/bites/00255/statetastes/img/mapbox-logo.png" margin="0" width="300px" height="100px" alt="mapbox icon" align="center">  </h3>
+              <hr>
+
+    <div class="content">
+                  <section>
+
+            
+            <div id='newmap' style='width: 100%; height: 800px;'></div>
+
+            <script>
+                mapboxgl.accessToken = 'pk.eyJ1Ijoia21pbGVzOTQiLCJhIjoiY2pvNTdoa2dyMDcyMTNrczExNTluc2liNCJ9.sdcjzY6RyrNg2roubvrFSw';
+                //The map variable
+                var newmap = new mapboxgl.Map({
+                    container: 'newmap',
+                    style: 'mapbox://styles/kmiles94/cjondhzpo3bd82snzs6dutxxk',
+                    center: [-155.5828, 19.8968],
+            zoom: 2
+            });
+
+              newmap.scrollZoom.enable();
+              newmap.addControl(new MapboxGeocoder({
+                    accessToken: mapboxgl.accessToken
+                }));
+
+            newmap.addControl(new mapboxgl.NavigationControl());
+
+             newmap.addControl(new mapboxgl.GeolocateControl({
+              positionOptions: {
+                  enableHighAccuracy: true
+              },
+              trackUserLocation: true
+          }));
+
+
+                
+                newmap.on('load', function(){
+                    newmap.addSource('earthquakes', {
+                        "type": "geojson",
+                        "data": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
+                    });
+                    newmap.addLayer({
+                        "id":"equakes",
+                        "type":"circle",
+                        "source":"earthquakes",
+                        "paint": {
+                            "circle-color": "#30415D",
+                            "circle-opacity": 0.5,
+                            "circle-radius": 10,
+                            "circle-stroke-color": '#8EAEBD',
+                            "circle-stroke-width": 1,
+                            "circle-stroke-opacity": 0.75
+                        }
+                    });
+               //add a handler for clicking/popups 
+                //Thanks to: https://www.mapbox.com/mapbox-gl-js/example/popup-on-click/ 
+                newmap.on('click', 'equakes', function (e) {
+                    newmap.getCanvas().style.cursor = 'pointer';
+                    var coordinates = e.features[0].geometry.coordinates.slice();
+                    var description = "<p>Mag: "+e.features[0].properties.mag+"<br>Location: "+e.features[0].properties.place+"<br>URL: <a href='"+e.features[0].properties.url+"'>USGS Details</a></p>"
+                    // Ensure that if the map is zoomed out such that multiple
+                    // copies of the feature are visible, the popup appears
+                    // over the copy being pointed to.
+                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                    }
+                    //make the popup
+                    new mapboxgl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML(description)
+                    .addTo(newmap);
+                });
+                    // Change the cursor to a pointer when the mouse is over the places layer.
+                    newmap.on('mouseenter', 'equakes', function () {
+                        map.getCanvas().style.cursor = 'pointer';
+                    });
+                    // Change it back to a pointer when it leaves.
+                    newmap.on('mouseleave', 'equakes', function () {
+                        newmap.getCanvas().style.cursor = '';
+                    });
+                });
+     
+</script>
+    <hr>
+    <h3 style="padding-left: 2%; color: #252523; background-color: #FFFFFF; margin: 0;"><center><img src="https://leafletjs.com/docs/images/logo.png" margin="0" width="300px" height="100px" alt="mapbox icon" align="center"></center> </h3>
+    <hr>
+
+  <div id="map"style="width: 100%; height: 800px"></div>
+
+
+  <script>
+    
+        var lat = 39.056198;
+        var lng = -95.695312;
+        var zoom = 4;
+          // set up the map and remove the default zoomControl 
+        var Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+          attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+          maxZoom: 16
+        });
+
+        var map = L.map('map', {
+            zoomControl: true
+        });
+              map.addLayer(Esri_WorldGrayCanvas);
+        // custom zoom bar control that includes a Zoom Home function
+        L.Control.zoomHome = L.Control.extend({
+            options: {
+                position: 'topright',
+                zoomInText: '+',
+                zoomInTitle: 'Zoom in',
+                zoomOutText: '-',
+                zoomOutTitle: 'Zoom out',
+                zoomHomeText: '<i class="fa fa-home" style="line-height:1.65;"></i>',
+                zoomHomeTitle: 'Zoom home'
+            },
+
+            onAdd: function (map) {
+                var controlName = 'gin-control-zoom',
+                    container = L.DomUtil.create('div', controlName + ' leaflet-bar'),
+                    options = this.options;
+
+                this._zoomInButton = this._createButton(options.zoomInText, options.zoomInTitle,
+                controlName + '-in', container, this._zoomIn);
+                this._zoomHomeButton = this._createButton(options.zoomHomeText, options.zoomHomeTitle,
+                controlName + '-home', container, this._zoomHome);
+                this._zoomOutButton = this._createButton(options.zoomOutText, options.zoomOutTitle,
+                controlName + '-out', container, this._zoomOut);
+
+                this._updateDisabled();
+                map.on('zoomend zoomlevelschange', this._updateDisabled, this);
+
+                return container;
+            },
+
+            onRemove: function (map) {
+                map.off('zoomend zoomlevelschange', this._updateDisabled, this);
+            },
+
+            _zoomIn: function (e) {
+                this._map.zoomIn(e.shiftKey ? 3 : 1);
+            },
+
+            _zoomOut: function (e) {
+                this._map.zoomOut(e.shiftKey ? 3 : 1);
+            },
+
+            _zoomHome: function (e) {
+                map.setView([lat, lng], zoom);
+            },
+
+            _createButton: function (html, title, className, container, fn) {
+                var link = L.DomUtil.create('a', className, container);
+                link.innerHTML = html;
+                link.href = '#';
+                link.title = title;
+
+                L.DomEvent.on(link, 'mousedown dblclick', L.DomEvent.stopPropagation)
+                    .on(link, 'click', L.DomEvent.stop)
+                    .on(link, 'click', fn, this)
+                    .on(link, 'click', this._refocusOnMap, this);
+
+                return link;
+            },
+
+            _updateDisabled: function () {
+                var map = this._map,
+                    className = 'leaflet-disabled';
+
+                L.DomUtil.removeClass(this._zoomInButton, className);
+                L.DomUtil.removeClass(this._zoomOutButton, className);
+
+                if (map._zoom === map.getMinZoom()) {
+                    L.DomUtil.addClass(this._zoomOutButton, className);
+                }
+                if (map._zoom === map.getMaxZoom()) {
+                    L.DomUtil.addClass(this._zoomInButton, className);
+                }
+            }
+        });
+            // add the new control to the map
+            var zoomHome = new L.Control.zoomHome();
+            zoomHome.addTo(map);
+                
+              // load a tile layer (base map)
+              L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+                  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                  maxZoom: 18,
+                  
+                }).addTo(map);
+               
+    
+        //add a KML layer - uses cors-anywhere to bypass the CORS restrictions on NOAA. TEMPORARY WORKAROUND, Eventually need to hook up a server instead of doing it this way. 
+                    var datalayer = omnivore.kml('https://cors-anywhere.herokuapp.com/https://www.wpc.ncep.noaa.gov/kml/winwx/HPC_Day1-3_psnow_gt_04_latest.kml')
+                        .on('ready', function() {
+                            map.fitBounds(datalayer.getBounds());
+                        })
+                    .addTo(map);
+</script>
+
+
+
+</body>
+</html>
