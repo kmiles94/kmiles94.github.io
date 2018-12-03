@@ -75,7 +75,8 @@
         
               <h3 style="padding-left: 2%; color: #252523; background-color: #FFFFFF; margin: 0;"><center>
                 <img src="https://www.mapbox.com/bites/00255/statetastes/img/mapbox-logo.png" margin="0" width="300px" height="100px" alt="mapbox icon" align="center">  </h3>
-              <hr>
+             	<br><p>Live Earthquakes layered over the Pacfic Ring of Fire, 75% of the worlds active volcanos. The earthquakes are represented by the dark blue circles, while the ring of fire is represented with the transparent light blue.</p>
+		<hr>
 
     <div class="content">
                   <section>
@@ -158,7 +159,8 @@
 </script>
     <hr>
     <h3 style="padding-left: 2%; color: #252523; background-color: #FFFFFF; margin: 0;"><center><img src="https://leafletjs.com/docs/images/logo.png" margin="0" width="300px" height="100px" alt="mapbox icon" align="center"></center> </h3>
-    <hr>
+			  <br><p>Snowfall expected to occur across the United States in a 72 hours.</p>
+			  <hr>
 
   <div id="map"style="width: 100%; height: 800px"></div>
 
@@ -169,15 +171,16 @@
         var lng = -120.7401;
         var zoom = 2;
           // set up the map and remove the default zoomControl 
-        var Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-          attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-          maxZoom: 10
-        });
+	var CartoDB_Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+		subdomains: 'abcd',
+		maxZoom: 19
+	});
 
         var map = L.map('map', {
             zoomControl: false
         });
-              map.addLayer(Esri_WorldGrayCanvas);
+              map.addLayer(CartoDB_Positron);
         // custom zoom bar control that includes a Zoom Home function
         L.Control.zoomHome = L.Control.extend({
             options: {
