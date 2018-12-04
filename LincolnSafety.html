@@ -1,0 +1,231 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Lincoln HS</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
+    <!-- the Geocoding Libaries -->
+        <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
+        <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css' type='text/css' />
+    <!-- Add JQuery to get local GeoJson file -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+</style> 
+
+</head>
+<body>
+
+
+<style>
+body {
+    overflow: hidden;
+}
+body * {
+   -webkit-touch-callout: none;
+     -webkit-user-select: none;
+        -moz-user-select: none;
+         -ms-user-select: none;
+             user-select: none;
+}
+.map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+.mapboxgl-popup {
+        max-width: 400px;
+        font: 12px/20px 'Times New Roman', Times, serif;
+}
+    #txtbox {
+        display: block;
+        position: relative;
+        margin: 0px auto;
+        width: 100%;
+        height: 60px;
+        padding: 1px;
+        border: none;
+        border-radius: 4px;
+        font: 12px/20px 'Times New Roman', Times, serif;
+        font-size: 18px;
+        text-align: center;
+        color: #595959;
+        background: #ffffff;
+    }
+</style>
+
+
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.css' type='text/css' />
+
+<div id='lincolnMap' class='map'></div>
+<nav id="menu"></nav>
+
+<script>
+                    mapboxgl.accessToken = 'pk.eyJ1Ijoia21pbGVzOTQiLCJhIjoiY2pvNTdoa2dyMDcyMTNrczExNTluc2liNCJ9.sdcjzY6RyrNg2roubvrFSw';
+                    var lincolnMap = new mapboxgl.Map({
+                    container: 'lincolnMap',
+                    style: 'mapbox://styles/kmiles94/cjpa4uzot56nl2ro3rbh1vngy',
+                    center: [-122.419643, 47.215146],
+                    zoom: 12.25
+                    });
+
+                    lincolnMap.on('load', function () {
+                        // Add a layer showing the state polygons.
+                        lincolnMap.addLayer({
+                            'id': 'TacomaBasemap',
+                            'type': 'fill',
+                            'source': {
+                                'type': 'geojson',
+                                'data': 'https://raw.githubusercontent.com/kmiles94/kmiles94.github.io/master/MapData/Tacoma.geojson'
+                            },
+                            'paint': {
+                                'fill-color': '#474747',
+                                'fill-opacity': 0.6,
+                                'fill-outline-color': '#CCCCCC'
+                            }
+                        });
+
+                        lincolnMap.addLayer({
+                            'id': 'CatchmentBoundary',
+                            'type': 'fill',
+                            'source': {
+                                'type': 'geojson',
+                                'data': 'https://raw.githubusercontent.com/kmiles94/kmiles94.github.io/master/MapData/Lincoln.geojson'
+                            },
+                            'paint': {
+                                'fill-color': '#F5BB00',
+                                'fill-opacity': 1,
+                                'fill-outline-color': '#e08f33'
+                            }
+                        });
+
+                        lincolnMap.addLayer({
+                            'id': 'LincolnHS',
+                            'type': 'fill',
+                            'source': {
+                                'type': 'geojson',
+                                'data': 'https://raw.githubusercontent.com/kmiles94/kmiles94.github.io/master/MapData/LHS.geojson'
+                            },
+                            'paint': {
+                                'fill-color': '#474747',
+                                'fill-opacity': 0.6,
+                                'fill-outline-color': '#FFFFFF'
+                            }
+                        });
+
+                    lincolnMap.addSource('BusLines', {
+                    "type": "geojson",
+                    "data": "https://raw.githubusercontent.com/kmiles94/kmiles94.github.io/master/MapData/BusLines.geojson"
+                });
+                //add the volcanoes to the map
+                lincolnMap.addLayer({
+                    "id":"BusLines",
+                    "type":"line",
+                    "source":"BusLines",
+                    'paint': {
+                        'line-width': 3,
+                        // color circles by ethnicity, using a match expression
+                        // https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
+                        'line-color': [
+                            'match',
+                            ['get', 'Designator'],
+                            '1', '#FF0000',
+                            '409', '#008080',
+                            '45', '#474747',
+                            '500', '#40004b',
+                            '55', '#313695',
+                            '501', '#74add1',
+                            '42', '#000000',
+                            '48', '#00441b',
+                            '202', '#67001f',
+                            '400', '#67001f',
+                            '102', '#c2a5cf',
+                            '41', '#c51b7d',
+                            '54', '#66c2a5',
+                            /* other */ '#000000'
+                        ]
+                    }
+                });
+
+                        lincolnMap.addLayer({
+                        "id": "points",
+                        "type": "symbol",
+                        "source": {
+                            "type": "geojson",
+                            "data": {
+                                "type": "FeatureCollection",
+                                "features": [{
+                                    "type": "Feature",
+                                    "geometry": {
+                                        "type": "Point",
+                                        "coordinates": [-122.4418063, 47.2249246]
+                                    },
+                                    "properties": {
+                                        "title": "LINCOLN HIGH SCHOOL",
+                                        "icon": "school"
+                                    }
+                                }]
+                            }
+                        },
+                        "layout": {
+                            "icon-image": "{icon}-15",
+                            "text-field": "{title}",
+                            "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+                            "text-offset": [0, -0.6],
+                            "text-anchor": "bottom"
+                        }
+                    });
+
+                    lincolnMap.addSource('BusPoints', {
+                    "type": "geojson",
+                    "data": "https://raw.githubusercontent.com/kmiles94/kmiles94.github.io/master/MapData/BusPoints.geojson"
+                });
+ 
+                //add the earthquakes to the map
+                lincolnMap.addLayer({
+                    "id":"BusPoints",
+                    "type":"circle",
+                    "source":"BusPoints",
+                    "paint": {
+                            "circle-color": "#474747",
+                            "circle-opacity": .5,
+                            "circle-radius": 4,
+                            "circle-stroke-color": '#4c4c4c',
+                            "circle-stroke-width": 1,
+                            "circle-stroke-opacity": 0.75
+                        }
+                });
+
+                //Thanks to: https://www.mapbox.com/mapbox-gl-js/example/popup-on-click/ 
+
+                lincolnMap.on('click', 'CatchmentBoundary', function (e) {
+                	var coordinates = e.features[0].geometry.coordinates.slice();
+                    var description = "<p> Bus-Line: " + e.features[0].properties.name + "</p>";
+                    
+                    
+                    // Ensure that if the map is zoomed out such that multiple
+                    // copies of the feature are visible, the popup appears
+                    // over the copy being pointed to.
+                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                    }
+                    //make the popup
+                    new mapboxgl.Popup()
+                        .setLngLat(coordinates)
+                        .setHTML(description)
+                        .addTo(lincolnMap);
+                         });    
+                });
+ 
+            // Add zoom and rotation controls to the map.
+            lincolnMap.addControl(new mapboxgl.NavigationControl()); document.getElementById('txtbox').addEventListener('click', function () {
+           
+ });     
+</script>
+
+</body>
+</html>
