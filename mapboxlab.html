@@ -28,6 +28,7 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet' />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -159,7 +160,7 @@
 </script>
     <hr>
     <h3 style="padding-left: 2%; color: #252523; background-color: #FFFFFF; margin: 0;"><center><img src="https://leafletjs.com/docs/images/logo.png" margin="0" width="300px" height="100px" alt="mapbox icon" align="center"></center> </h3>
-			  <p>Snowfall expected to occur across the United States in a 72 hours.</p>
+
 			  <hr>
 			  <p><center>Snowfall expected to occur across the United States in a 72 hours.</center></p>
 			  <hr>
@@ -169,20 +170,22 @@
 
   <script>
     
-        var lat = 47.7511;
-        var lng = -120.7401;
-        var zoom = 2;
+
           // set up the map and remove the default zoomControl 
 	var CartoDB_Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
 		subdomains: 'abcd',
-		maxZoom: 19
+		maxZoom: 15
 	});
 
         var map = L.map('map', {
             zoomControl: false
         });
               map.addLayer(CartoDB_Positron);
+
+       var lat = 36.7783;
+        var lng = -119.4179;
+        var zoom = 6;
         // custom zoom bar control that includes a Zoom Home function
         L.Control.zoomHome = L.Control.extend({
             options: {
@@ -268,7 +271,15 @@
                   maxZoom: 18,
                   
                 }).addTo(map);
-               
+
+            
+                        // Creating a marker
+         var marker = L.marker([47.2529, -122.4443]);
+         
+         // Adding marker to the map
+         marker.addTo(map);
+
+
     
         //add a KML layer - uses cors-anywhere to bypass the CORS restrictions on NOAA. TEMPORARY WORKAROUND, Eventually need to hook up a server instead of doing it this way. 
                     var datalayer = omnivore.kml('https://cors-anywhere.herokuapp.com/https://www.wpc.ncep.noaa.gov/kml/winwx/HPC_Day1-3_psnow_gt_04_latest.kml')
@@ -276,6 +287,8 @@
                             map.fitBounds(datalayer.getBounds());
                         })
                     .addTo(map);
+
+
 </script>
 
 
