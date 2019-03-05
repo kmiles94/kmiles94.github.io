@@ -1,0 +1,22 @@
+body {
+    padding: 3;
+    margin: 0;
+}
+html, body, #map {
+    height: 100%;
+    width: 100vw;
+}
+
+.leaflet-control-layers-toggle:after{ 
+    content:"your text"; 
+    color:#000 ;
+}
+.leaflet-control-layers-toggle{ 
+    width:auto;
+    background-position:3px 50% ;
+    padding:3px;
+    padding-left:36px;
+    text-decoration:none;
+    line-height:36px;
+
+}
