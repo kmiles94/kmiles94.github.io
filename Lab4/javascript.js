@@ -123,7 +123,7 @@ var Info =  L.Control.extend({
 
 
     container.onclick = function(){
-      window.confirm('Info');
+      window.confirm('Are you aware that you are using sensors right now? The sensors being used on this webpage entail a GeoLocation sensor to find your current location, and a time sensor to automate Day or Night mode in this map.');
     };
 
     return container;
