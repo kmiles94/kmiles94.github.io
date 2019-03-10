@@ -15,7 +15,7 @@ L.Routing.control({
     ],
    // routeWhileDragging: true,
     geocoder: L.Control.Geocoder.nominatim()
-    router: new L.Routing.Mapbox('pk.eyJ1Ijoia21pbGVzOTQiLCJhIjoiY2pvNTdoa2dyMDcyMTNrczExNTluc2liNCJ9.sdcjzY6RyrNg2roubvrFSw')
+    // router: new L.Routing.Mapbox('pk.eyJ1Ijoia21pbGVzOTQiLCJhIjoiY2pvNTdoa2dyMDcyMTNrczExNTluc2liNCJ9.sdcjzY6RyrNg2roubvrFSw')
 }).addTo(map); 
 
     function createButton(label, container) {
