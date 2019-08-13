@@ -1,0 +1,369 @@
+<html>
+<head>
+<meta charset='utf-8' />
+<title>Outreach Locations</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.css' rel='stylesheet' />
+<style>
+body { margin:0; padding:0; }
+#map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+ 
+    <style>
+        .mapboxgl-popup {
+        max-width: 400px;
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        }
+
+            .legend {
+    background-color: #191a1a;
+    border-radius: 3px;
+    bottom: 30px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    color: #ffffff;
+    padding: 10px;
+    position: absolute;
+    right: 10px;
+    z-index: 1;
+}
+
+.legend h4 {
+    margin: 0 0 10px;
+}
+
+.legend div span {
+    border-radius: 50%;
+    display: inline-block;
+    height: 10px;
+    margin-right: 5px;
+    width: 10px;
+}
+    </style>
+
+<div id='map'></div>
+
+<div id='legend' class='legend'>
+    <h4>Outreach Locations</h4><hr>
+    <div><span style='background-color: #F0F3BD'></span>Click on the Star to see the location name</div>
+
+</div>
+    <script>
+                mapboxgl.accessToken = 'pk.eyJ1Ijoia21pbGVzOTQiLCJhIjoiY2pvNTdoa2dyMDcyMTNrczExNTluc2liNCJ9.sdcjzY6RyrNg2roubvrFSw';
+                 
+                var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/kmiles94/cjzacsyk706ji1cmwh1ra3moi',
+                center: [-122.321877, 47.615],
+                zoom: 9.9
+                });
+ 
+map.on('load', function () {
+// Add a layer showing the places.
+map.addLayer({
+"id": "places",
+"type": "symbol",
+"source": {
+"type": "geojson",
+"data": {
+"type": "FeatureCollection",
+"features": [{
+"type": "Feature",
+"properties": {
+"description": "<strong>Highland Park</strong>",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.3487443, 47.527478]
+}
+}, {
+"type": "Feature",
+"properties": {
+"description": "<strong>Little Saigon</strong>",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.3153474, 47.5990078]
+}
+}, {
+"type": "Feature",
+"properties": {
+"description": "<strong>Queen Anne</strong>",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.3568641, 47.6323268]
+}
+}, {
+"type": "Feature",
+"properties": {
+"description": "<strong>Cascade</strong>",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.331715, 47.6219695]
+}
+}, {
+"type": "Feature",
+"properties": {
+"description": "<strong>West Seattle</strong>",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.3867537, 47.5666668]
+}
+}, {
+"type": "Feature",
+"properties": {
+"description": "<strong>Beacon Hill</strong>",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.300937, 47.552585]
+}
+}, {
+"type": "Feature",
+"properties": {
+"description": "<strong>Capitol Hill</strong>",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.3221835, 47.625305]
+}
+}, {
+"type": "Feature",
+"properties": {
+"description": "<strong>Belltown</strong",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.3447964, 47.6147023]
+}
+}, 
+{
+"type": "Feature",
+"properties": {
+"description": "<strong>Wallingford</strong>",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.3421188, 47.6614222]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"description": "<strong>Ravenna Park</strong> ",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.31304, 47.671208]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"description": "<strong>Othello</strong> ",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.2815107, 47.5380107]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"description": "<strong>Lake City</strong> ",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.292721, 47.719264]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"description": "<strong>Square Park</strong> ",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.316434, 47.607253]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"description": "<strong>Washington Park</strong>",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.2878347, 47.6272131]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"description": "<strong>Victory Heights</strong> ",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.30569, 47.7114063]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"description": "<strong>University District</strong> ",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.3138767, 47.6627771]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"description": "<strong>Hilltop</strong> ",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.311071, 47.617425]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"description": "<strong>Olympic Hills</strong>",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.3050098, 47.7239733]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"description": "<strong>Northlake</strong> ",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.3416753, 47.6479477]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"description": "<strong>Licton Springs Park</strong> ",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.3385591, 47.69854]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"description": "<strong>Ballard</strong> ",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.3860312, 47.6792172]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"description": "<strong>South Park</strong>",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.3257361, 47.5310941]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"description": "<strong>Fremont Park</strong> ",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.3500004, 47.6541773]
+}
+}, {
+"type": "Feature",
+"properties": {
+"description": "<strong>SoDo</strong> ",
+"icon": "star"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [-122.3348036, 47.5829755]
+}
+}]
+}
+},
+"layout": {
+"icon-image": "{icon}-15",
+"icon-allow-overlap": true
+}
+});
+ 
+// When a click event occurs on a feature in the places layer, open a popup at the
+// location of the feature, with description HTML from its properties.
+map.on('click', 'places', function (e) {
+var coordinates = e.features[0].geometry.coordinates.slice();
+var description = e.features[0].properties.description;
+ 
+// Ensure that if the map is zoomed out such that multiple
+// copies of the feature are visible, the popup appears
+// over the copy being pointed to.
+while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+}
+ 
+new mapboxgl.Popup()
+.setLngLat(coordinates)
+.setHTML(description)
+.addTo(map);
+});
+ 
+// Change the cursor to a pointer when the mouse is over the places layer.
+map.on('mouseenter', 'places', function () {
+map.getCanvas().style.cursor = 'pointer';
+});
+ 
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'places', function () {
+map.getCanvas().style.cursor = '';
+});
+});
+</script>
+ 
+</body>
+</html>
