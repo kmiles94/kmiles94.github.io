@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Seattle Discards</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
+    <!-- the Geocoding Libaries -->
+        <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
+        <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css' type='text/css' />
+    <!-- Add JQuery to get local GeoJson file -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+</style> 
+
+</head>
+<body>
+
+
+<style>
+body {
+    overflow: hidden;
+}
+body * {
+   -webkit-touch-callout: none;
+     -webkit-user-select: none;
+        -moz-user-select: none;
+         -ms-user-select: none;
+             user-select: none;
+}
+.map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+.mapboxgl-popup {
+        max-width: 400px;
+        font: 12px/20px 'Times New Roman', Times, serif;
+}
+    #txtbox {
+        display: block;
+        position: relative;
+        margin: 0px auto;
+        width: 100%;
+        height: 60px;
+        padding: 1px;
+        border: none;
+        border-radius: 4px;
+        font: 12px/20px 'Times New Roman', Times, serif;
+        font-size: 18px;
+        text-align: center;
+        color: #595959;
+        background: #ffffff;
+    }
+    .legend {
+    background-color: #191a1a;
+    border-radius: 3px;
+    bottom: 30px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    color: #ffffff;
+    padding: 10px;
+    position: absolute;
+    right: 10px;
+    z-index: 1;
+}
+
+.legend h4 {
+    margin: 0 0 10px;
+}
+
+.legend div span {
+    border-radius: 50%;
+    display: inline-block;
+    height: 10px;
+    margin-right: 5px;
+    width: 10px;
+}
+</style>
+
+
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.css' type='text/css' />
+
+<div id='Map2019' class='map'></div>
+<nav id="menu"></nav>
+
+<div id='legend' class='legend'>
+    <h4>2019 Discards</h4><hr>
+    <div><span style='background-color: #F0F3BD'></span>Very Low <br><center><strong>0-5 %</strong></center> </div>
+    <div><span style='background-color: #02D9AB'></span>Low <br><center><strong>5-15 %</strong></center> </div>
+    <div><span style='background-color: #00A899'></span>Moderate <br><center><strong>15-25 %</strong></center> </div>
+    <div><span style='background-color: #028090'></span>High <br><center><strong>25-50 %</strong></center> </div>
+    <div><span style='background-color: #05668D'></span>Very High <br><center><strong>+50 %</strong></center></div>
+
+</div>
+
+<script>
+                    mapboxgl.accessToken = 'pk.eyJ1Ijoia21pbGVzOTQiLCJhIjoiY2pvNTdoa2dyMDcyMTNrczExNTluc2liNCJ9.sdcjzY6RyrNg2roubvrFSw';
+                    var Map2019 = new mapboxgl.Map({
+                    container: 'Map2019',
+                    style: 'mapbox://styles/kmiles94/cjyhsi4fr1pdi1dphm2xkq03y',
+                    center: [-122.321877, 47.615],
+                    zoom: 9.9
+                    });
+                
+                var legend = document.getElementById('legend');
+                Map2019.on('zoom', function() {
+                    if (map.getZoom() > zoomThreshold) {
+                        stateLegendEl.style.display = 'none';
+                    } else {
+                        stateLegendEl.style.display = 'block';
+              
+                    }
+                });
+
+                Map2019.addControl(new mapboxgl.GeolocateControl({
+                positionOptions: {
+                enableHighAccuracy: true
+                },
+                trackUserLocation: true
+            }));
+            // Add zoom and rotation controls to the map.
+
+            Map2019.addControl(new mapboxgl.NavigationControl());   
+                                
+                
+      
+</script>
+
+</body>
+</html>
